@@ -1,0 +1,19 @@
+function fetchGoogleResults(query, airbnbUrl) {
+    const loadingElement = document.getElementById('loading');
+    const resultsContainer = document.getElementById('results');
+    
+    loadingElement.style.display = 'block';
+    resultsContainer.innerHTML = '';
+
+    fetch('https://airbnb-search-worker.g-samuelbaker.workers.dev/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+    })
+    .then(response => response.json())
+    .then(data => displayResults(data))
+    .catch(error => console.error('Error:', error))
+    .finally(() => loadingElement.style.display = 'none');
+}
